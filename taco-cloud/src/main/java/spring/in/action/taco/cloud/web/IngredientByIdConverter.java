@@ -1,4 +1,4 @@
-package spring.in.action.taco.cloud.web.controller;
+package spring.in.action.taco.cloud.web;
 
 import java.util.HashMap;
 import java.util.Map;
