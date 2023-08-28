@@ -1,7 +1,9 @@
 package spring.in.action.taco.cloud.web.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import spring.in.action.taco.cloud.data.interfaces.TacoOrderRepository;
 import spring.in.action.taco.cloud.domain.TacoOrder;
 
 import org.springframework.stereotype.Controller;
@@ -16,20 +18,23 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
+@RequiredArgsConstructor
 public class OrderController {
 
-	@GetMapping("/current")
-	public String orderForm() {
-		return "orderForm";
-	}
+    private final TacoOrderRepository orderRepository;
 
-	@PostMapping
-	public String processOrder(
-			@Valid TacoOrder order, Errors errors,
-			SessionStatus sessionStatus) {
-		if (errors.hasErrors()) return "orderForm";
-		log.info("Order submitted: {}", order);
-		sessionStatus.setComplete();
-		return "redirect:/";
-	}
+    @GetMapping("/current")
+    public String orderForm() {
+        return "orderForm";
+    }
+
+    @PostMapping
+    public String processOrder(@Valid TacoOrder order, Errors errors,
+                               SessionStatus sessionStatus) {
+        if (errors.hasErrors()) return "orderForm";
+        orderRepository.save(order);
+        sessionStatus.setComplete();
+        log.info("Order submitted: {}", order);
+        return "redirect:/";
+    }
 }
