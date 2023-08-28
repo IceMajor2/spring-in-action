@@ -1,4 +1,4 @@
-package spring.in.action.taco.cloud.data;
+package spring.in.action.taco.cloud.data.interfaces;
 
 import spring.in.action.taco.cloud.domain.Ingredient;
 
