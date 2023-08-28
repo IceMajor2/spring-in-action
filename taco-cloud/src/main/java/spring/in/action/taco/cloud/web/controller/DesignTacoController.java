@@ -6,7 +6,7 @@ import java.util.stream.StreamSupport;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import spring.in.action.taco.cloud.data.interfaces.IngredientRepository;
+import spring.in.action.taco.cloud.data.IngredientRepository;
 import spring.in.action.taco.cloud.domain.Ingredient;
 import spring.in.action.taco.cloud.domain.Ingredient.Type;
 import spring.in.action.taco.cloud.domain.Taco;

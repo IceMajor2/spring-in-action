@@ -1,4 +1,4 @@
-package spring.in.action.taco.cloud.data.interfaces;
+package spring.in.action.taco.cloud.data;
 
 import org.springframework.data.repository.CrudRepository;
 import spring.in.action.taco.cloud.domain.TacoOrder;

@@ -3,7 +3,7 @@ package spring.in.action.taco.cloud.web.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import spring.in.action.taco.cloud.data.interfaces.TacoOrderRepository;
+import spring.in.action.taco.cloud.data.TacoOrderRepository;
 import spring.in.action.taco.cloud.domain.TacoOrder;
 
 import org.springframework.stereotype.Controller;

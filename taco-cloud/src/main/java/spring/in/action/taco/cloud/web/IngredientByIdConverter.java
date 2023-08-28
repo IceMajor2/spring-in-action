@@ -3,7 +3,7 @@ package spring.in.action.taco.cloud.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import spring.in.action.taco.cloud.data.interfaces.IngredientRepository;
+import spring.in.action.taco.cloud.data.IngredientRepository;
 import spring.in.action.taco.cloud.domain.Ingredient;
 
 @Component
