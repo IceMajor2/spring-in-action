@@ -1,15 +1,25 @@
 package spring.in.action.taco.cloud.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-public class Ingredient {
+@Table("INGREDIENT")
+public class Ingredient implements Persistable<String> {
 
-	private final String id;
-	private final String name;
-	private final Type type;
+    @Id
+    private final String id;
+    private final String name;
+    private final Type type;
 
-	public enum Type {
-		WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
-	}
+    @Override
+    public boolean isNew() {
+        return true;
+    }
+
+    public enum Type {
+        WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
+    }
 }
