@@ -37,7 +37,13 @@ public class JdbcIngredientRepository implements IngredientRepository {
 
     @Override
     public Ingredient save(Ingredient ingredient) {
-        return null;
+        jdbcTemplate.update(
+                "INSERT INTO ingredient (id, name, type) VALUES (?, ?, ?)",
+                ingredient.getId(),
+                ingredient.getName(),
+                ingredient.getType()
+        );
+        return ingredient;
     }
 
     private RowMapper<Ingredient> mapRowToIngredient() {
