@@ -10,6 +10,7 @@
 <div th:if="${error}">
     Unable to login. Check your username and password.
 </div>
+<p><a href="/oauth2/authorization/google">Sign in with Google</a></p>
 <p>New here? Click
     <a th:href="@{/register}">here</a> to register.</p>
 <form method="POST" th:action="@{/login}" id="loginForm">
