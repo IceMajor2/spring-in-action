@@ -31,6 +31,18 @@ CREATE TABLE IF NOT EXISTS ingredient (
     type VARCHAR(10) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS _user (
+    id IDENTITY,
+    username VARCHAR(32) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fullname VARCHAR(64) NOT NULL,
+    street VARCHAR(64) NOT NULL,
+    city VARCHAR(32) NOT NULL,
+    state VARCHAR(64) NOT NULL,
+    zip VARCHAR(10) NOT NULL,
+    phone_number INT NOT NULL
+);
+
 ALTER TABLE taco
     ADD FOREIGN KEY (taco_order) REFERENCES taco_order(id);
 ALTER TABLE ingredient_ref
