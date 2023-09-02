@@ -1,24 +1,57 @@
 package spring.in.action.taco.cloud.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import spring.in.action.taco.cloud.data.UserRepository;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final ClientRegistrationRepository clientRegistrationRepository;
+    private final GrantedAuthoritiesMapper userAuthoritiesMapper;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+        return new MvcRequestMatcher.Builder(introspector);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http
+                // SECURITY
+                .csrf(CsrfConfigurer::disable)
+                .headers(headers -> headers
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                // RISK
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/design", "/orders").hasRole("USER")
-                        .requestMatchers("/", "/**").permitAll())
+                        .requestMatchers(mvc.pattern("/design"), mvc.pattern("/orders")).hasRole("USER")
+                        .requestMatchers(mvc.pattern("/"), mvc.pattern("/**")).permitAll()
+                        .requestMatchers(toH2Console()).permitAll()
+                        .anyRequest().permitAll())
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/design")
+                        .clientRegistrationRepository(clientRegistrationRepository)
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userAuthoritiesMapper(userAuthoritiesMapper)))
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/design"));
