@@ -1,9 +1,12 @@
 package spring.in.action.taco.cloud.security;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,11 +16,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Configuration
+@ConditionalOnProperty(prefix = "security.oauth2", name = "enable", havingValue = "true", matchIfMissing = false)
 @PropertySource("classpath:oauth2.properties")
 public class OAuth2SecurityConfig {
 
@@ -27,6 +32,19 @@ public class OAuth2SecurityConfig {
     private String clientSecret;
     @Value("${spring.security.oauth2.client.registration.server.provider}")
     private String provider;
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain oauth2FilterChain(HttpSecurity http) throws Exception {
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/design")
+                        .clientRegistrationRepository(clientRegistrationRepository())
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userAuthoritiesMapper(userAuthoritiesMapper())));
+        return http.build();
+    }
 
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService() {
