@@ -3,6 +3,9 @@ spring:
     generate-unique-name: false
     name: tacocloud
     url: jdbc:h2:mem:tacocloud
+security:
+  oauth2:
+    enable: false
 #logging:
 #  level:
 #    org:

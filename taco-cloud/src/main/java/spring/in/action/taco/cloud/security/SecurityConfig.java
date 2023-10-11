@@ -1,8 +1,10 @@
 package spring.in.action.taco.cloud.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -25,15 +27,13 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final ClientRegistrationRepository clientRegistrationRepository;
-    private final GrantedAuthoritiesMapper userAuthoritiesMapper;
-
     @Bean
     MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
         return new MvcRequestMatcher.Builder(introspector);
     }
 
     @Bean
+    @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http
                 // SECURITY
@@ -46,17 +46,13 @@ public class SecurityConfig {
                         .requestMatchers(mvc.pattern("/"), mvc.pattern("/**")).permitAll()
                         .requestMatchers(toH2Console()).permitAll()
                         .anyRequest().permitAll())
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/design")
-                        .clientRegistrationRepository(clientRegistrationRepository)
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userAuthoritiesMapper(userAuthoritiesMapper)))
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/design"));
         return http.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
