@@ -42,23 +42,33 @@ public class Application {
 
             Taco taco1 = new Taco();
             taco1.setName("Carnivore");
-            taco1.setIngredients(Set.of(new IngredientRef(flourTortilla), new IngredientRef(groundBeef),
-                    new IngredientRef(carnitas), new IngredientRef(sourCream),
-                    new IngredientRef(salsa), new IngredientRef(cheddar)));
+            taco1.setIngredients(Set.of(
+                    new IngredientRef(flourTortilla.getId(), flourTortilla.getName(), flourTortilla.getType().name()),
+                    new IngredientRef(groundBeef.getId(), groundBeef.getName(), groundBeef.getType().name()),
+                    new IngredientRef(carnitas.getId(), carnitas.getName(), carnitas.getType().name()),
+                    new IngredientRef(sourCream.getId(), sourCream.getName(), sourCream.getType().name()),
+                    new IngredientRef(salsa.getId(), salsa.getName(), salsa.getType().name()),
+                    new IngredientRef(cheddar.getId(), cheddar.getName(), cheddar.getType().name())));
             tacoRepository.save(taco1);
 
             Taco taco2 = new Taco();
             taco2.setName("Bovine Bounty");
-            taco2.setIngredients(Set.of(new IngredientRef(cornTortilla), new IngredientRef(groundBeef),
-                    new IngredientRef(cheddar), new IngredientRef(jack),
-                    new IngredientRef(sourCream)));
+            taco2.setIngredients(Set.of(
+                    new IngredientRef(cornTortilla.getId(), cornTortilla.getName(), cornTortilla.getType().name()),
+                    new IngredientRef(groundBeef.getId(), groundBeef.getName(), groundBeef.getType().name()),
+                    new IngredientRef(cheddar.getId(), cheddar.getName(), cheddar.getType().name()),
+                    new IngredientRef(jack.getId(), jack.getName(), jack.getType().name()),
+                    new IngredientRef(sourCream.getId(), sourCream.getName(), sourCream.getType().name())));
             tacoRepository.save(taco2);
 
             Taco taco3 = new Taco();
             taco3.setName("Veg-Out");
-            taco3.setIngredients(Set.of(new IngredientRef(flourTortilla), new IngredientRef(cornTortilla),
-                    new IngredientRef(tomatoes), new IngredientRef(lettuce),
-                    new IngredientRef(salsa)));
+            taco3.setIngredients(Set.of(
+                    new IngredientRef(flourTortilla.getId(), flourTortilla.getName(), flourTortilla.getType().name()),
+                    new IngredientRef(cornTortilla.getId(), cornTortilla.getName(), cornTortilla.getType().name()),
+                    new IngredientRef(tomatoes.getId(), tomatoes.getName(), tomatoes.getType().name()),
+                    new IngredientRef(lettuce.getId(), lettuce.getName(), lettuce.getType().name()),
+                    new IngredientRef(salsa.getId(), salsa.getName(), salsa.getType().name())));
             tacoRepository.save(taco3);
 
             // "admin", "admin"

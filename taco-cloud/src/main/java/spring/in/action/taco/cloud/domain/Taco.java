@@ -27,12 +27,12 @@ public class Taco {
     private Set<IngredientRef> ingredients = new HashSet<>();
 
     void addIngredient(Ingredient ingredient) {
-        this.ingredients.add(new IngredientRef(ingredient));
+        this.ingredients.add(new IngredientRef(ingredient.getId(), ingredient.getName(), ingredient.getType().name()));
     }
 
     Set<String> getIngredientIds() {
         return this.ingredients.stream()
-                .map(IngredientRef::getId)
+                .map(IngredientRef::getIngredient)
                 .collect(Collectors.toSet());
     }
 }
