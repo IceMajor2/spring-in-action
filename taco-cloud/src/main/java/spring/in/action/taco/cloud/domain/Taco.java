@@ -1,7 +1,7 @@
 package spring.in.action.taco.cloud.domain;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,5 +24,15 @@ public class Taco {
 
     @NotNull
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    private List<IngredientRef> ingredients;
+    private Set<IngredientRef> ingredients = new HashSet<>();
+
+    void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(new IngredientRef(ingredient));
+    }
+
+    Set<String> getIngredientIds() {
+        return this.ingredients.stream()
+                .map(IngredientRef::getId)
+                .collect(Collectors.toSet());
+    }
 }
