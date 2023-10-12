@@ -42,4 +42,6 @@ public class TacoController {
     public Taco postTaco(@RequestBody Taco taco) {
         return tacoRepository.save(taco);
     }
+
+    // TODO: write mappings for PUT, PATCH & DELETE HTTP requests
 }
