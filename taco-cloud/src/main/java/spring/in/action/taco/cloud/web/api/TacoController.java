@@ -67,5 +67,13 @@ public class TacoController {
         return ResponseEntity.ok(tacoRepository.save(taco));
     }
 
-    // TODO: write mappings for DELETE HTTP requests
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        Optional<Taco> optionalTaco = tacoRepository.findById(id);
+        if (optionalTaco.isEmpty())
+            return ResponseEntity.notFound().build();
+        tacoRepository.delete(optionalTaco.get());
+        return ResponseEntity.noContent().build();
+    }
 }
