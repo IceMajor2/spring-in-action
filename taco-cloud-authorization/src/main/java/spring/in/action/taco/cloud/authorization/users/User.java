@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Data
-@Entity
+@Entity(name = "_user")
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class User implements UserDetails {
