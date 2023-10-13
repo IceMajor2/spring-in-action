@@ -8,9 +8,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Data
 @Table("TACO")
+@RestResource(rel = "tacos", path = "tacos")
 public class Taco {
 
     @Id
