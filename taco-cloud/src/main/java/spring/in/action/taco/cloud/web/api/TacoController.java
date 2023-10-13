@@ -53,5 +53,19 @@ public class TacoController {
         return ResponseEntity.ok(tacoRepository.save(taco));
     }
 
-    // TODO: write mappings for PATCH & DELETE HTTP requests
+    @PatchMapping(value = "/{id}", consumes = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Taco> update(@PathVariable("id") Long id, @RequestBody Taco patch) {
+        Optional<Taco> optionalTaco = tacoRepository.findById(id);
+        if (optionalTaco.isEmpty())
+            return ResponseEntity.notFound().build();
+        Taco taco = optionalTaco.get();
+        if(patch.getName() != null)
+            taco.setName(patch.getName());
+        if(patch.getIngredients() != null && !patch.getIngredients().isEmpty())
+            taco.setIngredients(patch.getIngredients());
+        return ResponseEntity.ok(tacoRepository.save(taco));
+    }
+
+    // TODO: write mappings for DELETE HTTP requests
 }
