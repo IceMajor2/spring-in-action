@@ -22,7 +22,7 @@ public class TacoController {
     private final TacoRepository tacoRepository;
 
     @GetMapping(params = "recent")
-    public Iterable<Taco> recentTacos() {
+    public Iterable<Taco> getRecent() {
         PageRequest page = PageRequest.of(
                 0, 12, Sort.by("createdAt").descending()
         );
@@ -30,7 +30,7 @@ public class TacoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Taco> tacoById(@PathVariable("id") Long id) {
+    public ResponseEntity<Taco> getById(@PathVariable("id") Long id) {
         Optional<Taco> optionalTaco = tacoRepository.findById(id);
         if (optionalTaco.isPresent())
             return ResponseEntity.ok(optionalTaco.get());
@@ -39,9 +39,19 @@ public class TacoController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Taco postTaco(@RequestBody Taco taco) {
+    public Taco add(@RequestBody Taco taco) {
         return tacoRepository.save(taco);
     }
 
-    // TODO: write mappings for PUT, PATCH & DELETE HTTP requests
+    @PutMapping(value = "/{id}", consumes = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Taco> replace(@PathVariable("id") Long id, @RequestBody Taco taco) {
+        Optional<Taco> optionalTaco = tacoRepository.findById(id);
+        if (optionalTaco.isEmpty())
+            return ResponseEntity.notFound().build();
+        taco.setId(id);
+        return ResponseEntity.ok(tacoRepository.save(taco));
+    }
+
+    // TODO: write mappings for PATCH & DELETE HTTP requests
 }
