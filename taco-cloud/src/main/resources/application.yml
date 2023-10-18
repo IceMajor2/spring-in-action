@@ -6,6 +6,7 @@ spring:
   data:
     rest:
       base-path: /data-api
+# custom 'security.oauth2.enable' property that determines creation of `Oauth2SecurityConfig` component
 security:
   oauth2:
     enable: false
