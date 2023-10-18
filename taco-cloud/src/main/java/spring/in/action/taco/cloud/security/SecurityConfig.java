@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 // RISK
                 .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/data-api/ingredients")).hasAuthority("SCOPE_writeIngredients")
                         .requestMatchers(mvc.pattern("/design"), mvc.pattern("/orders")).hasRole("USER")
                         .requestMatchers(mvc.pattern("/"), mvc.pattern("/**")).permitAll()
                         .requestMatchers(toH2Console()).permitAll()
