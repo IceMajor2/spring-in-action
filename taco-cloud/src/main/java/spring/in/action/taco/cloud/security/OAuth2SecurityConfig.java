@@ -37,6 +37,10 @@ public class OAuth2SecurityConfig {
     @Order(2)
     public SecurityFilterChain oauth2FilterChain(HttpSecurity http) throws Exception {
         http
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwtConfigurer -> jwtConfigurer
+                                // TODO: move to properties file
+                                .jwkSetUri("http://localhost:9000/oauth2/jwks")))
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
                         .defaultSuccessUrl("/design")
@@ -61,19 +65,19 @@ public class OAuth2SecurityConfig {
     private ClientRegistration getRegistration(String client) {
         if (client.equals("google")) {
             return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-                    .clientId(clientId).clientSecret(clientSecret).build();
+                                              .clientId(clientId).clientSecret(clientSecret).build();
         }
         if (client.equals("okta")) {
             return CommonOAuth2Provider.OKTA.getBuilder(client)
-                    .clientId(clientId).clientSecret(clientSecret).build();
+                                            .clientId(clientId).clientSecret(clientSecret).build();
         }
         if (client.equals("github")) {
             return CommonOAuth2Provider.GITHUB.getBuilder(client)
-                    .clientId(clientId).clientSecret(clientSecret).build();
+                                              .clientId(clientId).clientSecret(clientSecret).build();
         }
         if (client.equals("facebook")) {
             return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
-                    .clientId(clientId).clientSecret(clientSecret).build();
+                                                .clientId(clientId).clientSecret(clientSecret).build();
         }
         return null;
     }
