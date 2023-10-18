@@ -12,9 +12,11 @@ import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Data
 @Table("TACO_ORDER")
+@RestResource(rel = "taco-orders", path = "taco-orders")
 public class TacoOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
