@@ -37,10 +37,6 @@ public class OAuth2SecurityConfig {
     @Order(2)
     public SecurityFilterChain oauth2FilterChain(HttpSecurity http) throws Exception {
         http
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwtConfigurer -> jwtConfigurer
-                                // TODO: move to properties file
-                                .jwkSetUri("http://localhost:9000/oauth2/jwks")))
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
                         .defaultSuccessUrl("/design")
