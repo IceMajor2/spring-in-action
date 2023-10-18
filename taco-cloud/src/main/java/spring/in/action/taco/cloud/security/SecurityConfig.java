@@ -48,7 +48,14 @@ public class SecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 // RISK
                 .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(mvc.pattern("/data-api/users")).denyAll()
+                        .requestMatchers(mvc.pattern("/data-api/users/**")).denyAll()
+                        .requestMatchers(mvc.pattern("/data-api/taco-orders")).denyAll()
+                        .requestMatchers(mvc.pattern("/data-api/taco-orders/**")).denyAll()
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/data-api/tacos")).authenticated()
+                        .requestMatchers(mvc.pattern(HttpMethod.DELETE, "/data-api/tacos/**")).denyAll()
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/data-api/ingredients")).hasAuthority("SCOPE_writeIngredients")
+                        .requestMatchers(mvc.pattern(HttpMethod.DELETE, "/data-api/ingredients/**")).hasAuthority("SCOPE_deleteIngredients")
                         .requestMatchers(mvc.pattern("/design"), mvc.pattern("/orders")).hasRole("USER")
                         .requestMatchers(mvc.pattern("/"), mvc.pattern("/**")).permitAll()
                         .requestMatchers(toH2Console()).permitAll()
