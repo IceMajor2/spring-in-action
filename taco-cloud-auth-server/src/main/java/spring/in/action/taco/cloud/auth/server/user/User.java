@@ -1,4 +1,4 @@
-package spring.in.action.taco.cloud.authorization.users;
+package spring.in.action.taco.cloud.auth.server.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -57,5 +57,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

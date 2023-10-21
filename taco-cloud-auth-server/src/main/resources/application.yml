@@ -1,0 +1,28 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.security: trace
+
+#spring:
+#  security:
+#    oauth2:
+#      authorizationserver:
+#        client:
+#          taco-cloud-admin-client:
+#            registration:
+#              client-id: "taco-cloud-admin-client"
+#              client-secret: "{bcrypt}$2a$10$svJBe5amHyTTMK8WFqR8DutGZTb5rjK2joNiKqnt8.U.ouh5B63ae"
+#              client-authentication-methods:
+#                - "client_secret_basic"
+#              authorization-grant-types:
+#                - "authorization_code"
+#                - "refresh_token"
+#              redirect-uris:
+#                - "http://127.0.0.1:9000/login/oauth2/code/taco-cloud-admin-client"
+#              scopes:
+#                - "openid"
+#                - "writeIngredients"
+#                - "deleteIngredients"
+#              require-authorization-consent: true

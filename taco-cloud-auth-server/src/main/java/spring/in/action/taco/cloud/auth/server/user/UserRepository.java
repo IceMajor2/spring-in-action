@@ -1,4 +1,4 @@
-package spring.in.action.taco.cloud.authorization.users;
+package spring.in.action.taco.cloud.auth.server.user;
 
 import org.springframework.data.repository.CrudRepository;
 
