@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>spring.in.action</groupId>
-    <artifactId>taco.cloud</artifactId>
+    <artifactId>taco-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>taco.cloud</name>
     <description>Taco Cloud service</description>
