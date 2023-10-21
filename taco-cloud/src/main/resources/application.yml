@@ -3,18 +3,18 @@ spring:
     generate-unique-name: false
     name: tacocloud
     url: jdbc:h2:mem:tacocloud
+
   data:
     rest:
       base-path: /data-api
+
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:9000/oauth2/jwks
-# custom 'security.oauth2.enable' property that determines creation of `Oauth2SecurityConfig` component
-security:
-  oauth2:
-    enable: false
+          issuer-uri: "http://localhost:9000"
+          jwk-set-uri: "http://localhost:9000/oauth2/jwks"
+
 #logging:
 #  level:
 #    org:
